@@ -23,7 +23,7 @@ def send_welcome(message):
 @bot.message_handler(commands=['parse'])
 @bot.message_handler(regexp="Распарсить")
 def find(message):
-    message = bot.reply_to(message, 'Пришлите текст')
+    message = bot.reply_to(message, 'Пришли текст')
     bot.register_next_step_handler(message, parse)
     # bot.register_next_step_handler(message, result_back)
 def parse(message):
@@ -40,7 +40,7 @@ def ask(message):
     global token
     usr_id = str(message.from_user.id)
     if usr_id in admins:
-        bot.reply_to(message, 'Запрашиваю результат для тебя. Готовься заполнить капчу.')
+        bot.reply_to(message, 'Запрашиваю капчу, жди.')
         token = get_captcha()
         print(token)
         img = open('captcha/captcha.jpg', 'rb')
@@ -53,7 +53,7 @@ def get_res(message):
     captcha_answer = message.text
     usr_id = str(message.from_user.id)
     os.remove('captcha/captcha.jpg')
-    bot.reply_to(message, 'Ответ записан. Начат запрос по данным')
+    bot.reply_to(message, 'Ответ записан. Ищу твои результаты.')
     with open("users/base.json", "r") as read_file:
         db = json.load(read_file)
     user = db[usr_id]
